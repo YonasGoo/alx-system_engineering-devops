@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo chmod -R a+X ./
+sudo find $PWD -type d -exec chmod a+X {} +
