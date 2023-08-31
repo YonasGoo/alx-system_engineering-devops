@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo chmod 741 d*
+sudo chmod 755 d*
