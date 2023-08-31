@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo chmod 711 d*
+sudo chmod -R 711 d*
