@@ -1,1 +1,2 @@
 #!/bin/bash
+ls -l | grep -n '^' | grep -E '^[[:digit:]]*[02468]:'
