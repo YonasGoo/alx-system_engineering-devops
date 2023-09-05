@@ -1,2 +1,2 @@
 #!/bin/bashi
-grep 'root' /etc/passwd
+egrep 'root' /etc/passwd
