@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -1 | grep -n . | grep -E '^[[:digit:]]*[13579]:' | cut -d: -f
+ls -1 | grep -n . | grep -E '^[[:digit:]]*[13579]:' | cut -d: -f2
