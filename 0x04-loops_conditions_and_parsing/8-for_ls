@@ -1,1 +1,9 @@
 #!/usr/bin/env bash
+# Display directory in list
+for file in *
+do
+	if [ ! -d "$file" ] && [ "${file:0:1}" != "." ]; then
+		name_dash=$(echo "$file" | cut -d'-' -f2-)
+		echo "$name_dash"
+	fi
+done
