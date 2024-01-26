@@ -1,1 +1,15 @@
 #!/usr/bin/env bash
+# display clock
+hour=0
+minute=1
+
+while [ $hour -le 12 ] && [ $minute -le 59 ]
+do
+    printf "%02d:%02d\n" $hour $minute
+
+    ((minute++))
+    if [ $minute -eq 60 ]; then
+        ((hour++))
+        minute=1
+    fi
+done | head -n 70
