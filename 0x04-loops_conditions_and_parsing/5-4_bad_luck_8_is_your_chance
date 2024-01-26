@@ -1,1 +1,15 @@
 #!/usr/bin/env bash
+# 10 loops, bad luck at 4, good luck at 8, Best School for other
+counter=1
+while [ $counter -le 10 ]
+do
+	if [ $counter -eq 4 ]; then
+		echo "Bad Luck"
+	elif [ $counter -eq 8 ]; then
+		echo "Good Luck"
+	else
+		echo "Best School"
+	fi
+
+	((counter++))
+done
