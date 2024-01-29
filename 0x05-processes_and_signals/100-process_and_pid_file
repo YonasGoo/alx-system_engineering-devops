@@ -1,1 +1,22 @@
 #!/usr/bin/env bash
+# Y U nio love me?
+echo $$ > /var/run/myscript.pid
+handle_sigterm(){
+	echo "I hate the kill command"
+}
+handle_sigint(){
+	echo "Y U no love me?!"
+}
+handle_either(){
+	rm /var/run/script.pid
+	exit 0
+}
+
+trap handle_sigterm SIGTERM
+trap handle_sigint SIGINT
+trap handle_either SIGQUIT SIGTERM
+
+while true; do
+	echo "To infinity and beyond"
+	sleep 2
+done
