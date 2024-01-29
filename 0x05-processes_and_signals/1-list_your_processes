@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-# shows idk what
+# displays a list of currently running processes.
 ps -eo pid,ppid,cmd --forest
