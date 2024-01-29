@@ -1,1 +1,3 @@
 #!/usr/bin/env bash
+# shows idk what
+ps -eo pid,ppid,cmd --forest
