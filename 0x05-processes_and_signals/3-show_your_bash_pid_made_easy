@@ -1,1 +1,8 @@
 #!/usr/bin/env bash
+# Show your Bash PID made easy
+printf "%-8s %-20s\n" "PID" "PROCESS NAME"
+for pid in $(pgrep -f bash)
+do
+	process=$(ps -p $pid -o comm=)
+	printf "%-8s %-20s\n" "$pid" "$process_name"
+done
