@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+host="/etc/hosts"
+cp "$host" "$host.bak"
+
+echo "127.0.0.2 localhost" | sudo tee -a "$host"
+echo "8.8.8.8 facebook.com" | sudo tee -a "$host"
+
+echo "Hosts file updated successfully"
+
+sudo systemctl restart systemd-resolved

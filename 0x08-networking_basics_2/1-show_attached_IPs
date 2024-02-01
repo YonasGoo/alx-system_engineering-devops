@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+active=$(ifconfig | grep -oE "inet [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" | awk '{print $2}')
+echo "$active"
