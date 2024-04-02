@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#debug nginx port 80
+if ! command -v nginx &? /dev/null
+then
+	echo "Nginx is not installed. Installing..."
+	apt-get update
+	apt-get install nginx -y
+fi
+
+echo "Configuring Nginx..."
+sed -i 's/listen 80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
+
+echo "Restarting Nginx..."
+systemctl restart nginx
+
+echo "Nginx configuration compeleted."
