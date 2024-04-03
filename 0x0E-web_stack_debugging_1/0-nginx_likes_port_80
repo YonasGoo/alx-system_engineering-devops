@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-#debug nginx port 80
+#find what's keeping your ubuntu
+#install Nginx
 sudo sed -i 's/8080/g' /etc/ngimx/sites-enabled/default
 sudo service nginx restart
