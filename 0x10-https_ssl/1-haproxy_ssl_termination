@@ -39,7 +39,7 @@ defaults
 frontend haproxy
         bind *:80
         # This is our new config that listens on port 443 for SSL connections
-        bind *:443 ssl crt /etc/ssl/www.gafat.tech
+        bind *:443 ssl crt /etc/ssl/www.gafat.tech/www.fullchain.pem
         # Test URI to see if its a letsencrypt request
         acl letsencrypt-acl path_beg /.well-known/acme-challenge/
         use_backend letsencrypt-backend if letsencrypt-acl
@@ -52,5 +52,5 @@ backend letsencrypt-backend
 
 backend WEBSERVERS
         balance roundrobin
-        server web1 18.234.80.243 check
-        server web2 18.204.10.124 check
+        server web1 18.234.80.243:80 check
+        server web2 18.204.10.124:80 check
