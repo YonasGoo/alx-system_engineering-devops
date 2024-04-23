@@ -1,14 +1,17 @@
 #!/usr/bin/python3
+
 """
 This script exports user's todo data to a CSV file.
 Usage: python script.py USER_ID
 """
+
 import csv
 import requests
 from sys import argv
 
 def export_to_csv(user_id):
     """Export user's todo data to CSV."""
+    
     try:
         todo_data = requests.get(f'https://jsonplaceholder.typicode.com/todos?userId={user_id}').json()
         username = requests.get(f'https://jsonplaceholder.typicode.com/users/{user_id}').json().get('username')
@@ -20,6 +23,7 @@ def export_to_csv(user_id):
                 csv_writer.writerow(row)
         
         print(f"Data exported to: {user_id}.csv")
+    
     except requests.RequestException as e:
         print(f"Error fetching data: {e}")
 
