@@ -1,23 +1,34 @@
 #!/usr/bin/python3
-# csv exported
+
+"""
+This script exports todo data of all employees to a JSON file.
+"""
+
 import json
 from requests import get
-from sys import argv
-
 
 def jsonWrite():
-    """writes to csv"""
-    data = get('https://jsonplaceholder.typicode.com/users').json()
-    ids = [(dic.get('id'), dic.get('username')) for dic in data]
+    """Writes todo data of all employees to JSON."""
+
+    # Fetch user data
+    users_data = get('https://jsonplaceholder.typicode.com/users').json()
+
+    # Prepare data for each user
     dumped = {}
-    for person in ids:
-        data = get(
-            'https://jsonplaceholder.typicode.com/todos?userId={}'.format(
-                person[0])).json()
-        ordered = [{"task": line.get('title'), "completed":
-                    line.get('completed'), "username":
-                    person[1]} for line in data]
-        dumped[person[0]] = ordered
+    for user in users_data:
+        user_id = user.get('id')
+        username = user.get('username')
+
+        # Fetch todo data for the user
+        todo_data = get(f'https://jsonplaceholder.typicode.com/todos?userId={user_id}').json()
+
+        # Prepare ordered data
+        ordered = [{"task": line.get('title'), "completed": line.get('completed'), "username": username} for line in todo_data]
+        
+        # Store the data for the user
+        dumped[user_id] = ordered
+    
+    # Write to JSON file
     with open('todo_all_employees.json', 'w') as f:
         json.dump(dumped, f)
 

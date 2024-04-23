@@ -9,23 +9,27 @@ import csv
 import requests
 from sys import argv
 
+
 def export_to_csv(user_id):
     """Export user's todo data to CSV."""
-    
+
     try:
-        todo_data = requests.get(f'https://jsonplaceholder.typicode.com/todos?userId={user_id}').json()
-        username = requests.get(f'https://jsonplaceholder.typicode.com/users/{user_id}').json().get('username')
-        
+        todo_data = requests.get(
+                f'https://jsonplaceholder.typicode.com/todos?userId={user_id}').json()
+        username = requests.get(
+                f'https://jsonplaceholder.typicode.com/users/{user_id}').json().get('username')
+
         with open(f'{user_id}.csv', 'w', newline='') as csv_file:
             csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
             for task in todo_data:
                 row = [task.get('userId'), username, task.get('completed'), task.get('title')]
                 csv_writer.writerow(row)
-        
+
         print(f"Data exported to: {user_id}.csv")
-    
+
     except requests.RequestException as e:
         print(f"Error fetching data: {e}")
+
 
 if __name__ == "__main__":
     if len(argv) == 2:
