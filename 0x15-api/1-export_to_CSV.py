@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-# csv exported
+"""
+This script exports user's todo data to a CSV file.
+Usage: python script.py USER_ID
+"""
 import csv
 import requests
 from sys import argv
