@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 #debugging project
+sudo apt-get update
+sudo apt-get install -y apache2
+echo "Hello Holberton" | sudo tee /var/www/html/index.html
 sudo service apache2 start
+echo "Apache setup complete. You can now access the 'Hello Holberton' page by navigating to the IP address or domain name of your container in a web browser."
