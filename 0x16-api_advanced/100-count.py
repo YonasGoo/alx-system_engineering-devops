@@ -1,45 +1,35 @@
 #!/usr/bin/python3
-# get subs
+""" ecursive function that queries the Reddit API, parses the title
+of all hot articles, and prints a sorted count of given keywords
+"""
 from requests import get
-from sys import argv
-
-hotlist = []
-after = None
 
 
-def count_all(hotlist, word_list):
-    count_dic = {word.lower(): 0 for word in word_list}
-    for title in hotlist:
-        words = title.split(' ')
-        for word in words:
-            if count_dic.get(word) is not None:
-                count_dic[word] += 1
-
-    for key in sorted(count_dic, key=count_dic.get, reverse=True):
-        if count_dic.get(key):
-            for thing in word_list:
-                if key == thing.lower():
-                    print("{}: {}".format(thing, count_dic[key]))
-
-
-def count_words(subreddit, word_list):
-    global hotlist
-    global after
-    """subs"""
-    head = {'User-Agent': 'Dan Kazam'}
-    if after:
-        count = get('https://www.reddit.com/r/{}/hot.json?after={}'.format(
-            subreddit, after), headers=head).json().get('data')
+def count_words(subreddit, word_list, after="", counter={}, first=0):
+    """parses the title of all hot articles, and prints a sorted list."""
+    url = 'https://www.reddit.com'
+    path = '/r/{}/hot.json?after='.format(subreddit)
+    header = {'user-agent': 'jormao'}
+    r = get(url + path + str(after), headers=header, allow_redirects=False)
+    if (first == 0):
+        for word in word_list:
+            counter[word] = 0
+        first = 1
+    if (r.status_code in [302, 404]):
+        return (None)
     else:
-        count = get('https://www.reddit.com/r/{}/hot.json'.format(
-            subreddit), headers=head).json().get('data')
-    hotlist += [dic.get('data').get('title').lower()
-                for dic in count.get('children')]
-    after = count.get('after')
-    if after:
-        return count_words(subreddit, word_list)
-    return count_all(hotlist, word_list)
-
-
-if __name__ == "__main__":
-    count_words(argv[1], argv[2].split(' '))
+        hot_post = r.json()['data']['children']
+        for hot in hot_post:
+            new_list = (hot['data']['title']).lower().split(" ")
+            for word in word_list:
+                for w_list in new_list:
+                    if word.lower() == w_list:
+                        counter[word] += 1
+        after = r.json()['data']['after']
+        if (after is not None):
+            count_words(subreddit, word_list, after, counter, first)
+        else:
+            p = sorted(counter.items(), key=lambda x: x[1], reverse=True)
+            for k, v in p:
+                if v != 0:
+                    print('{}: {}'.format(k, v))
