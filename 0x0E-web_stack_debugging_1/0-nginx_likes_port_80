@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-#find what's keeping your ubuntu
-#install Nginx
-sudo sed -i 's/8080/g' /etc/nginx/sites-enabled/default
-sudo service nginx restart

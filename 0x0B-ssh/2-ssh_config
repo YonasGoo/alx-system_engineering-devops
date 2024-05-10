@@ -1,4 +1,0 @@
-#ssh config
-ForwardAgent yes
-IdentityFile ~/.ssh/school
-PasswordAuthentication no
