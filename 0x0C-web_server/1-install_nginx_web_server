@@ -2,5 +2,6 @@
 #install an nginx server and change index page to string "Hello World"
 sudo apt-get update
 sudo apt-get -y install nginx
-echo "Hello World!" | sudo tee /usr/share/nginx/html/index.html
-sudo service nginx restart
+file1=/usr/share/nginx/html/index.html
+sudo bash -c "echo 'Hello World! > $file1"
+service nginx start
