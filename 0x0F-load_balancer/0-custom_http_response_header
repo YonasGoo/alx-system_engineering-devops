@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #sets up custom header
-sudo apt-get -y
-sudo apt-get -y install nginx
-file="/etc/nginx/sites-available/default"
-sudo sed -i "21i add_header X-Served-By $HOSTNAME;" $file
-sudo service nginx restart
+apt-get -y update
+apt-get -y install nginx
+ufw allow 'Nginx HTTP'
+echo 'Hello World!' > /var/www/html/index.nginx-debian.html
+sed -i '/listen 80 default_server;/a add_header X-Served-By $hostname;' /etc/nginx/sites-available/default
+service nginx start
