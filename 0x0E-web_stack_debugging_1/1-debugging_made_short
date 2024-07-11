@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#short and sweet version of task #0
+sed -i 's/8080/g' /etc/nginx/sites-enabled/default
+service nginx restart
+pkill -o nginx
