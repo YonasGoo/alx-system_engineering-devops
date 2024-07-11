@@ -52,5 +52,5 @@ backend letsencrypt-backend
 
 backend WEBSERVERS
         balance roundrobin
-        server web1 18.234.80.243:80 check
-        server web2 18.204.10.124:80 check
+        server web1 54.144.239.209:80 check
+        server web2 54.160.71.31:80 check
