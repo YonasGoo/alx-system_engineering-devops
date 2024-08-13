@@ -1,15 +1,15 @@
 this is fictional
 ## Issue Summary
 
-Outage Duration:
+### Outage Duration:
 
     Start: August 11, 2024, 05:30 AM EAT
     End: August 11, 2024, 08:15 AM EAT
 
-Impact:
+### Impact:
 During the outage, 65% of users experienced slow loading times or were unable to access our main web application. Services affected included the main web server and the API server. Some users reported long load times, while others received a 503 Service Unavailable error.
 
-Root Cause:
+### Root Cause:
 The outage was caused by a misconfigured firewall rule following a recent security update. This configuration blocked incoming HTTP and HTTPS traffic from certain IP ranges.
 Timeline
 
@@ -26,22 +26,22 @@ Timeline
     08:00 AM EAT: Monitoring systems showed a gradual recovery in traffic and reduction in errors.
     08:15 AM EAT: The incident was declared resolved as all systems were fully operational.
 
-Root Cause and Resolution
+### Root Cause and Resolution
 
-Root Cause:
+#### Root Cause:
 The root cause was a firewall rule that was misconfigured during a security update. This rule unintentionally blocked incoming HTTP and HTTPS requests from several IP ranges. The issue arose because of a mistake in the automated script used to apply the update, which failed to properly include all the IP ranges needed for normal operation.
 
-Resolution:
+#### Resolution:
 The issue was resolved by manually correcting the firewall rule to allow incoming traffic from all necessary IP ranges. The system architecture team quickly reviewed and adjusted the firewall settings, ensuring that the updated configurations were correctly applied.
 Corrective and Preventative Measures
 
-Improvements:
+### Improvements:
 
     Improved Testing Procedures: Before deploying firewall updates, conduct more thorough testing, including scenarios that simulate different IP ranges and traffic types.
     Enhanced Monitoring: Implement monitoring systems that specifically alert for unusual drops in traffic and spikes in error rates.
     Change Management Process: Establish a more rigorous change management process for deploying security updates, including multiple levels of approval and automated checks.
 
-Tasks:
+### Tasks:
 
     Update Firewall Scripts: Revise the automated firewall script to include comprehensive checks for all IP ranges before deployment.
     Develop Test Scenarios: Create a suite of test scenarios that cover various types of traffic to ensure firewall updates do not disrupt service.
