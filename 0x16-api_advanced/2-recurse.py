@@ -1,28 +1,50 @@
 #!/usr/bin/python3
-"""Module for task 2"""
+
+"""
+Queries the Reddit API recursively and returns
+a list containing the titles of all hot articles
+for a given subreddit. If no results are found for
+the given subreddit, return None.
+"""
+
+from requests import get
+from sys import argv
 
 
-def recurse(subreddit, hot_list=[], count=0, after=None):
-    """Queries the Reddit API and returns all hot posts
-    of the subreddit"""
-    import requests
-
-    sub_info = requests.get("https://www.reddit.com/r/{}/hot.json"
-                            .format(subreddit),
-                            params={"count": count, "after": after},
-                            headers={"User-Agent": "My-User-Agent"},
-                            allow_redirects=False)
-    if sub_info.status_code >= 400:
+def recurse(subreddit: str, hot_list=[], after="", count=0) -> list:
+    """
+    Function to recurcively query a subreddit
+    And return the hot topics for the subreddit
+    Args:
+        subreddit (str): The subreddit to query
+        hot_list (list): Doesn't have to be passed
+        after (str): Doesn't have to be passed
+        count (int): Doesn't have to be passed
+    """
+    request_url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
+    headers = {
+        "User-Agent": "I'll use a Real user Agent next I promise"
+    }
+    query_strings = {
+        "after": after,
+        "count": count,
+        "limit": 100
+    }
+    response = get(request_url, headers=headers, params=query_strings,
+                   allow_redirects=False)
+    if response.status_code == 404:
         return None
 
-    hot_l = hot_list + [child.get("data").get("title")
-                        for child in sub_info.json()
-                        .get("data")
-                        .get("children")]
+    results = response.json()['data']
+    after = results['after']
+    count += results['dist']
+    for child in results["children"]:
+        hot_list.append(child["data"]["title"])
 
-    info = sub_info.json()
-    if not info.get("data").get("after"):
-        return hot_l
+    if after is not None:
+        return recurse(subreddit, hot_list, after, count)
+    return hot_list
 
-    return recurse(subreddit, hot_l, info.get("data").get("count"),
-                   info.get("data").get("after"))
+
+if __name__ == "__main__":
+    print(recurse(argv[1]))

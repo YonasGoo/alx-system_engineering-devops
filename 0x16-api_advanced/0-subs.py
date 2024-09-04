@@ -1,17 +1,36 @@
 #!/usr/bin/python3
-"""Module for task 0"""
+
+"""
+Query a subreddit and return the number of
+total subscribers in that subredit
+"""
+
+from requests import get
+from sys import argv
 
 
-def number_of_subscribers(subreddit):
-    """Queries the Reddit API and returns the number of subscribers
-    to the subreddit"""
-    import requests
+headers = {
+    "User-Agent": "Of course I had to use a custom User-Agent",
+    "X-Forwared-For": "iamthecavalry"
+}
 
-    sub_info = requests.get("https://www.reddit.com/r/{}/about.json"
-                            .format(subreddit),
-                            headers={"User-Agent": "My-User-Agent"},
-                            allow_redirects=False)
-    if sub_info.status_code >= 300:
+
+def number_of_subscribers(subreddit: str) -> int:
+    """
+    Query the subreddit and return the number of
+    Active subs. If its an invalid subredit, return 0
+    """
+    response = get("https://www.reddit.com/r/{}/about.json".format(subreddit),
+                   headers=headers)
+    data = response.json()
+    try:
+        if 'error' in data.keys():
+            return 0
+        else:
+            return data['data']['subscribers']
+    except Exception as e:
         return 0
 
-    return sub_info.json().get("data").get("subscribers")
+
+if __name__ == "__main__":
+    print(number_of_subscribers(argv[1]))
