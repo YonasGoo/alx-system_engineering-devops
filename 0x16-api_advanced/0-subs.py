@@ -11,7 +11,7 @@ from sys import argv
 
 headers = {
     "User-Agent": "Of course I had to use a custom User-Agent",
-    "X-Forwared-For": "iamthecavalry"
+    "X-Forwared-For": "iamthenewone"
 }
 
 
